@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+  <script>
+    AFRAME.registerComponent('click_alert', {
+      init: function () {
+        this.el.addEventListener('click', function () {
+          alert("ゴミ箱がいっぱいです。ゴミを出してください！");
+        });
+      }
+    });
+  </script>
+</head>
+
+<body style="margin: 0; overflow: hidden;">
+  <a-scene embedded arjs>
+    <a-marker preset="hiro">
+
+      <!-- AR上のゴミ箱 -->
+      <!-- ゴミ箱本体 -->
+<a-entity rotation="-90 0 0">
+<a-box
+  position="0 0.45 0"
+  width="0.7"
+  height="0.9"
+  depth="0.6"
+  color="#667782">
+</a-box>
+
+<!-- ゴミ箱のフタ -->
+<a-box
+  position="0 0.93 0"
+  width="0.76"
+  height="0.08"
+  depth="0.66"
+  color="#455A64">
+</a-box>
+
+<!-- フタの取っ手 -->
+<a-box
+  position="0 1.0 0"
+  width="0.22"
+  height="0.05"
+  depth="0.12"
+  color="#263238">
+</a-box>
+
+<!-- ゴミ箱をクリックするための透明な判定用オブジェクト -->
+<a-box
+  class="clickable"
+  click_alert
+  position="0 0.5 0"
+  width="0.72"
+  height="1.0"
+  depth="0.62"
+  material="opacity: 0; transparent: true; shader: flat">
+</a-box>
+
+      <!-- ゴミの量を表示 -->
+      <a-text
+        value="ゴミの量：80%"
+        position="-0.9 1.4 0"
+        color="#FF0000"
+        align="center"
+        scale="1.2 1.2 1.2">
+      </a-text>
+
+      <a-text
+        value="クリックして状態を確認"
+        position="-1.1 1.15 0"
+        color="#FFFFFF"
+        align="center"
+        scale="0.7 0.7 0.7">
+      </a-text>
+
+    </a-marker>
+
+    <a-entity camera>
+      <a-cursor
+        raycaster="objects: .clickable"
+        cursor="rayOrigin: entity">
+      </a-cursor>
+    </a-entity>
+  </a-scene>
+</body>
+</html>
